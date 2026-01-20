@@ -72,47 +72,54 @@ const LevelMap = () => {
           </svg>
 
           {/* Mobile: Vertical layout */}
-          <div className="md:hidden flex flex-col items-center gap-4">
-            {materiList.map((materi, index) => {
-              const Icon = materi.icon;
-              return (
-                <motion.div
-                  key={materi.id}
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
-                  className="relative"
-                >
-                  {/* Connecting line (except first) */}
-                  {index > 0 && (
-                    <div className="absolute -top-4 left-1/2 w-1 h-4 bg-gradient-to-b from-transparent to-primary/30" />
-                  )}
-                  
-                  <button
-                    onClick={() => navigate(`/materi/${materi.id}`)}
-                    className="group relative"
+          {/* Mobile: Timeline Layout */}
+          <div className="md:hidden relative py-8 px-2">
+            {/* Center Line */}
+            <div className="absolute left-1/2 top-4 bottom-4 w-0.5 -ml-[1px] bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
+
+            <div className="flex flex-col gap-8">
+              {materiList.map((materi, index) => {
+                const Icon = materi.icon;
+                const isLeft = index % 2 === 0;
+
+                return (
+                  <motion.div
+                    key={materi.id}
+                    initial={{ opacity: 0, x: isLeft ? -20 : 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.2 }}
+                    className={`relative flex items-center ${isLeft ? 'flex-row' : 'flex-row-reverse'} gap-4`}
                   >
-                    {/* Glow effect */}
-                    <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${nodeColors[index]} blur-xl opacity-30 group-hover:opacity-60 transition-opacity`} />
-                    
-                    {/* Node circle */}
-                    <div className={`relative w-20 h-20 rounded-full bg-gradient-to-br ${nodeColors[index]} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border-4 border-white/20`}>
-                      <Icon className="w-8 h-8 text-primary-foreground" />
+                    {/* Text Content */}
+                    <div className={`flex-1 ${isLeft ? 'text-right' : 'text-left'}`}>
+                      <div className="glass-card p-3 inline-block">
+                        <h3 className="font-bold text-foreground text-sm leading-tight">{materi.title}</h3>
+                        <span className="text-[10px] text-primary uppercase tracking-wider font-bold">Level {index + 1}</span>
+                      </div>
                     </div>
-                    
-                    {/* Level number */}
-                    <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-background border-2 border-primary flex items-center justify-center">
-                      <span className="text-sm font-bold text-primary">{index + 1}</span>
+
+                    {/* Node Circle (Centered) */}
+                    <div className="relative z-10 shrink-0">
+                      <button
+                        onClick={() => navigate(`/materi/${materi.id}`)}
+                        className="group relative"
+                      >
+                        {/* Glow effect */}
+                        <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${nodeColors[index]} blur-xl opacity-30 group-hover:opacity-60 transition-opacity`} />
+
+                        {/* Node circle */}
+                        <div className={`relative w-16 h-16 rounded-full bg-gradient-to-br ${nodeColors[index]} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border-2 border-white/20`}>
+                          <Icon className="w-6 h-6 text-primary-foreground" />
+                        </div>
+                      </button>
                     </div>
-                  </button>
-                  
-                  {/* Label */}
-                  <div className="mt-3 text-center">
-                    <p className="font-bold text-foreground text-sm">{materi.title}</p>
-                  </div>
-                </motion.div>
-              );
-            })}
+
+                    {/* Spacer for balance */}
+                    <div className="flex-1" />
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Desktop: Horizontal wave layout */}
@@ -120,7 +127,7 @@ const LevelMap = () => {
             {materiList.map((materi, index) => {
               const Icon = materi.icon;
               const isEven = index % 2 === 0;
-              
+
               return (
                 <motion.div
                   key={materi.id}
@@ -136,9 +143,9 @@ const LevelMap = () => {
                   >
                     {/* Glow effect */}
                     <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${nodeColors[index]} blur-2xl opacity-30 group-hover:opacity-60 transition-opacity`} />
-                    
+
                     {/* Node circle */}
-                    <motion.div 
+                    <motion.div
                       className={`relative w-24 h-24 rounded-full bg-gradient-to-br ${nodeColors[index]} flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300 border-4 border-white/20`}
                       whileHover={{ y: -5 }}
                       animate={{ y: [0, -8, 0] }}
@@ -146,18 +153,18 @@ const LevelMap = () => {
                     >
                       <Icon className="w-10 h-10 text-primary-foreground" />
                     </motion.div>
-                    
+
                     {/* Level number badge */}
                     <div className="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-background border-2 border-primary flex items-center justify-center shadow-lg">
                       <span className="text-lg font-bold text-primary">{index + 1}</span>
                     </div>
-                    
+
                     {/* Pulse effect on hover */}
                     <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${nodeColors[index]} opacity-0 group-hover:opacity-40 group-hover:animate-ping`} />
                   </button>
-                  
+
                   {/* Label card */}
-                  <motion.div 
+                  <motion.div
                     className="mt-4 glass-card px-4 py-2 text-center max-w-[150px]"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -172,7 +179,7 @@ const LevelMap = () => {
           </div>
 
           {/* Decorative dashed line connecting nodes on mobile */}
-          <div className="md:hidden absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/20 via-primary/40 to-primary/20" style={{ zIndex: 0 }} />
+
         </div>
 
         {/* Legend */}
