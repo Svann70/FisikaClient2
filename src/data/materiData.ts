@@ -98,7 +98,7 @@ export const materiList: MateriContent[] = [
     points: [
       "Kerangka acuan yang dipercepat",
       "Muncul gaya semu (pseudo force)",
-      "Rumus: F_semu = -m × a_kerangka",
+      "Rumus: F = -m × a",
       "Hukum Newton memerlukan koreksi gaya semu"
     ],
     examples: [
@@ -156,9 +156,11 @@ export const materiList: MateriContent[] = [
 export const teamInfo = {
   groupName: "Kelompok Fisika Kelas XI",
   members: [
-    "Nama Anggota 1",
-    "Nama Anggota 2", 
-    "Nama Anggota 3",
-    "Nama Anggota 4"
+    "Danish Bima Abisali",
+    "Syabrina Haura Safa", 
+    "Keisya Putri Aulia",
+    "Syafira Cynthia Dewi",
+    "M.levi",
+    "Enggar Aditya Sanusi"
   ]
 };
