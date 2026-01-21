@@ -98,7 +98,7 @@ export const materiList: MateriContent[] = [
     points: [
       "Kerangka acuan yang dipercepat",
       "Muncul gaya semu (pseudo force)",
-      "Rumus: F = -m × a",
+      "Rumus: F = m × a",
       "Hukum Newton memerlukan koreksi gaya semu"
     ],
     examples: [
